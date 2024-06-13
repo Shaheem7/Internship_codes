@@ -300,19 +300,19 @@ for mod_packet in mod_packets:
 
     # UPDATING THE BOOLEAN VALUES IN THE GOOSEPDU HEADER
 
-    for value in range(0,mod_pdu_decode['numDatSetEntries'],2):
-        if mod_pdu_decode['allData'].getComponentByPosition(value) == False:
-            mod_pdu_decode['allData'].setComponentByPosition(value, true_value)
-            continue
-        elif mod_pdu_decode['allData'].getComponentByPosition(value) == True:
-            mod_pdu_decode['allData'].setComponentByPosition(value, true_value)
-            continue
+    # for value in range(0,mod_pdu_decode['numDatSetEntries']):
+    #     if mod_pdu_decode['allData'].getComponentByPosition(value) == False:
+    #         mod_pdu_decode['allData'].setComponentByPosition(value, true_value)
+    #         continue
+    #     elif mod_pdu_decode['allData'].getComponentByPosition(value) == True:
+    #         mod_pdu_decode['allData'].setComponentByPosition(value, true_value)
+    #         continue
 
     # INCREMENT THE STNUM VALUE 
     mod_pdu_decode.setComponentByName('stNum', (random.randint(0, 100)))
 
     # RESETING THE SQNUM VALUE, note that we will need to increment this or increment stNum and keep this 0
-    mod_pdu_decode.setComponentByName('sqNum', int(tmpSQNUM)+10) 
+    mod_pdu_decode.setComponentByName('sqNum', 10) 
 
     # WE ALSO HAVE TO CHANGE THE TIMESTAMP WITH THE CURRENT ONE, AND THE TIME SHOULD BE IN 64 BITS
     new_time = curTime64Bits()
