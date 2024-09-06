@@ -1,0 +1,48 @@
+For data manipulation within the DNP3 protocol, the following parameters are key considerations:
+
+### 1. **Function Codes**
+   - **Purpose:** Function codes define the operation (e.g., Read, Write, Select, Operate).
+   - **Manipulation Target:** Changing the function code can alter the intended operation (e.g., changing a Read request to a Write request).
+
+### 2. **Data Object Identification**
+   - **Purpose:** Each data object in DNP3 has a specific Object Group, Variation, and Index.
+   - **Manipulation Target:** Modifying the Object Group or Variation can change the data being requested or sent (e.g., from Class 1 to Class 2 data).
+
+### 3. **Transport Layer Sequence Numbers**
+   - **Purpose:** Sequence numbers ensure proper order and integrity of communication.
+   - **Manipulation Target:** Altering sequence numbers can cause out-of-order data processing, potentially leading to data loss or incorrect operations.
+
+### 4. **Application Layer Parameters**
+   - **Application Control (FIR, FIN, Sequence)**
+     - **Purpose:** Controls the flow of data in the application layer.
+     - **Manipulation Target:** Changing FIR (First) and FIN (Final) flags or the sequence number can disrupt the correct interpretation of the data stream.
+   - **Data Objects**
+     - **Purpose:** Encodes the actual data or commands.
+     - **Manipulation Target:** Modifying the data values or structures can lead to incorrect data being processed by the receiving device.
+
+### 5. **Checksums (Data Link Layer & Application Layer)**
+   - **Purpose:** Ensure data integrity.
+   - **Manipulation Target:** After any data manipulation, checksums must be recalculated to avoid detection and maintain communication integrity.
+
+### 6. **Source and Destination Addresses**
+   - **Purpose:** Identifies the communicating devices.
+   - **Manipulation Target:** Changing these can redirect communication or spoof device identities.
+
+### 7. **Control Fields (Direction, Primary, Function Code)**
+   - **Purpose:** These fields define the nature of the communication (e.g., whether the packet is a command or a response).
+   - **Manipulation Target:** Altering the direction (DIR) or setting the primary (PRM) flag differently can change the packet's role in the communication, potentially misleading the receiving device.
+
+### 8. **Sequence Flags (FIR, FIN)**
+   - **Purpose:** Mark the start and end of a series of frames.
+   - **Manipulation Target:** Incorrectly setting or clearing these flags can disrupt the communication sequence, causing incomplete data processing.
+
+### 9. **Transport Control Fields**
+   - **Purpose:** Manage the transport of data chunks within the protocol.
+   - **Manipulation Target:** Altering fields like the sequence or flags can cause data chunks to be misinterpreted or lost.
+
+### 10. **IP and TCP Layer Parameters**
+   - **Source and Destination IP Addresses:** Identifying and potentially altering these addresses can redirect traffic.
+   - **TCP Sequence and Acknowledgment Numbers:** Changing these can lead to session hijacking or disruption.
+   - **Ports:** Manipulating source or destination ports may redirect traffic to different services or disrupt the communication flow.
+
+By carefully considering and manipulating these parameters, you can effectively alter the behavior of the DNP3 communication without immediately triggering alarms or breaking the communication channel. However, each change should be accompanied by recalculating checksums and ensuring the overall packet structure remains valid.

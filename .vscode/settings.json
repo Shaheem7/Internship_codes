@@ -2,5 +2,7 @@
     "github.codespaces.defaultExtensions": [
         "GitHub.codespaces",
         "GitHub.vscode-pull-request-github"
-    ]
+    ],
+    "terminal.integrated.scrollback": 1000,
+    "terminal.integrated.shellIntegration.history": 1000
 }

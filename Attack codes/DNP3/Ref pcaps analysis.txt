@@ -1,0 +1,18 @@
+
+
+pcap = 20200518_Replay_UOWM_DNP3_Dataset_Master
+
+total packets = 12136
+malformed =  1731          (14.3%)
+
+flags = {
+	malformed packet;
+ 	tcp retransmission;
+	tcp spurious retransmission;
+	tcp previous segment not captured;
+	tcp ACKed segment wasn't captured
+
+}
+
+
+

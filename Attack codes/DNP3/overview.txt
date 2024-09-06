@@ -1,0 +1,13 @@
+
+Attack pcaps overview
+
+Source pcap: Supervised.pcap
+
+- Replay : 
+	pcap = dnp3_replay
+	changes =  inserted 20 manipulated packets 
+	info = wireshark is showing retransmission flag
+
+- DOS :
+ 	pcap = dnp3_attack_dos.pcap
+	attack : use different ip to attack on target ip

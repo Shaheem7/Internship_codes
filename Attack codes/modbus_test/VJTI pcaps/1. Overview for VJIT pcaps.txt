@@ -1,0 +1,78 @@
+
+
+Source Pcap :  Modbus_VJTI_Testbed pcap
+
+
+1. Change in reference number :
+	pcap = change_in_reference_num.pcapng
+	change = { set the reference number to 9 for all Query packets}
+
+
+2. Change in function code 
+	pcaps = {  func_code_01.pcapng
+	                 func_code_02.pcapng
+		func_code_04.pcapng
+		func_code_05.pcapng
+		func_code_10.pcapng
+		func_code_0f.pcapng
+		}
+
+	changes = { set func_code of all the packets to  --> (1),
+		set func_code of all the packets to  --> (2)   ,
+		set func_code of all the packets to  --> (4),
+		set func_code of all the packets to  --> (5),
+		set func_code of all the packets to  --> (10),
+		set func_code of all the packets to  --> (0f)    
+		}
+
+
+3. Change in register values 
+	pcap = register_value_change.pcapng
+	changes = { set the last register value to  ( 00 10 ) hex }
+
+
+4. Change in trans id
+	pcap = { transid_c1.pcapng,
+		transid_c1.pcapng
+		}
+
+	changes = { Added 2 manipulated packets with different transid in the middle,
+		 Added 2 manipulated packets with different transid at the last  }
+
+
+5. Change in Length 		[Note: Wireshark is not parsing some packets well]
+	pcap = change_in_length
+	changes = { changes the length of 200 packets by increamenting 5 on each of them}
+
+
+6. Change in register value & function code 
+	pcap =  change_in_func_code_and_register_value.pcapng
+	changes = {  replaced all function codes --> (4)  ,
+ 		  set the last register value to 1       	    
+		 }
+
+
+7. Change in register value, function code and length   [Note: Wireshark is not parsing some packets well]
+	pcap = rv_func_len.pcapng
+	changes = { replaced func_code of response to  --> (2)  ,
+ 		  set the last register value to 1   ,
+		  increamented the length by 10   }
+
+
+8. All change [ rv + func + ref + transid ]
+	pcap =  allchange.pcapng
+	changes  = {  replaced func_code of response to  --> (2)  ,
+		 set reference number to 9 ,
+		 transid changes in last two packets,
+ 		  set the last register value to 1   	
+		}
+
+9. Replay 
+	pcap = modbus_attack_replay.pcapng
+	Have 10 replayed packets 
+
+10. DOS
+
+	pcap = modbus_attack_dos.pcapng
+	attacked a single device from various IPs
+
