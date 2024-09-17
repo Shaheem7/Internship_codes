@@ -6,4 +6,7 @@ packets = rdpcap(file)
 
 pkts = packets[1:11]
 
-wrpcap("modbus_attack_replay_10pkts.pcap", pkts, append=True)
+pkt = pkts[0]
+
+
+print(pkt.show())
