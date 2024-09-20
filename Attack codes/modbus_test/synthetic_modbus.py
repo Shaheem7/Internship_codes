@@ -21,7 +21,7 @@ if len(sys.argv) < 2:
 
 less_indent_formatter = lambda prog: argparse.RawTextHelpFormatter(prog, max_help_position=8)
 
-parser = argparse.ArgumentParser(description='Modbus Exploit.', formatter_class=less_indent_formatter, usage='python3 %(prog)s [options]')
+parser = argparse.ArgumentParser(description='\t ###################### \n \t ### MODBUS Exploit ### \n \t ######################  By S.M..', formatter_class=less_indent_formatter, usage='python3 %(prog)s [options]')
 parser.add_argument('--pcapfile', help='Name of the PCAP file to process.')
 parser.add_argument('--livecapture', action='store_true', help='Start the live capture. (default: %(default)s)')
 parser.add_argument('--store', help=""" Name the file to store the captured packets (should be with .pcap extension).""")
@@ -33,10 +33,6 @@ For live capture:
 Read from pcap file:
     python3 %(prog)s --pcapfile <filename> 
     
-    
- -----------------------
- Author: Shaheem Mushtaq
- ----------------------- 
     
 """)
 args = parser.parse_args()
