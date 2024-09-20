@@ -10,7 +10,7 @@ from scapy.layers.inet import IP, TCP
 
 # network choice and filter
 networkInterface = "eth1"
-filter_string = "modbus"
+filter_string = "ether proto 0x0800"
 Modbus_TYPE = 0x0800
 
 
@@ -49,8 +49,6 @@ def modbus_check(pkt):
         if pkt[Ether].type == Modbus_TYPE: is_modbus = True
     if pkt.haslayer(Dot1Q):
         if pkt[Dot1Q].type == Modbus_TYPE: is_modbus = True
-    # if pkt.haslayer(TCP) in pkt and pkt[TCP].dport == 502: is_modbus = True
-        
     return is_modbus
 
 
@@ -68,21 +66,8 @@ def filter_packets(packet, src_ip, dst_ip):
 
 # Read the given pcap file
 if args.pcapfile:
+    packets = rdpcap(args.pcapfile)
     print("\n[+] Reading pcap file... "); sleep(1)
-    capture = pyshark.FileCapture(args.pcapfile, 
-                              display_filter='modbus', 
-                              include_raw=True, 
-                              use_json=True)
-    
-    scapy_packets = []
-    for packet in capture:
-        raw_packet = bytes(packet.get_raw_packet())  # Get raw packet bytes
-        scapy_packets.append(raw_packet)
-    
-    wrpcap('temp.pcap', scapy_packets)
-    
-    packets = rdpcap('temp.pcap')
-
 
 
 # Live capture the packets from a live network
@@ -93,11 +78,9 @@ if args.livecapture:
         count = int(input('How many packets do you want to capture?: '))
         print("[+] Capturing packets...")
         captureLive = pyshark.LiveCapture(
-            interface=networkInterface, 
-            bpf_filter=filter_string,  # BPF (Berkeley Packet Filter)
-            output_file=args.store,    # Store output directly in a PCAP file
-            include_raw=True,          # Ensure raw packet data is captured
-            use_json=True              # Required when using raw packet data
+                interface=networkInterface, 
+                bpf_filter=filter_string,
+                output_file=args.store
         )
 
         #captureLive.set_debug()
@@ -125,35 +108,23 @@ unique_modbus_packets = set()       #  to store the Modbus packets for specific 
 
 # Extract the Modbus packets
 for packet in packets:
-    # if modbus_check(packet):
-    # Add only modbus packets to the list
-    # raw_packet = bytes(packet.get_raw_packet())  # Get raw packet bytes
-    # modbus_packets.append(raw_packet)
-    
-    # print(f"IP src: {packet['IP'].src} and IP dst: {packet['IP'].dst}")
-    
-    modbus_packets.append(packet)
-    
-    # Add unique source and destination IP addresses to the set
-    unique_modbus_packets.add((packet[IP].src, packet[IP].dst))
-
-
-print(f"[+] Total Modbus packets found: {len(modbus_packets)}")
-
-# print length of unique_modbus_packets
-print(f"[+] Total unique source-destination IP End Points: {len(unique_modbus_packets)}")
+    if modbus_check(packet):
+        # Add only modbus packets to the list
+        modbus_packets.append(packet)
+        
+        # Add unique source and destination IP addresses to the set
+        unique_modbus_packets.add((packet[IP].src, packet[IP].dst))
 
 
 
 # Printing a sample packet
 
 perm = input("Do you want to print a sample Modbus packet?[Y/N]: ")
-sample = modbus_packets[0]
+sample = modbus_packets[10]
 try:
     if perm in ['y', 'Y']:
         print("\n[+] Printing the sample Modbus packet..."); sleep(1)
-        # print(sample.show())
-        print(sample)
+        print(sample.show())
         print("\n")
         
     else:
@@ -258,9 +229,6 @@ elif pkt_type == 2:
     print("\n[+] Modifying the register value..."); sleep(1)
     
     for packet in mod_packets:
-        
-        print(packet)
-        print(packet.load)
         raw_bytes = bytearray(packet[Raw].load)
         
         # Modifying the function code

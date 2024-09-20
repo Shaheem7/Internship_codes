@@ -16,6 +16,7 @@ python <script_name> -h
 ## For offline execution ##
     python3 <script_name> --pcapfile <filename>
 
-make sure temporary pcap filename.pcapng should be present, if not then use 
+make sure temporary pcap filename.pcapng should be present, if not then use command
+= >    touch temp.pcapng
 
-touch temp.pcapng
+NOTE : When choosing Query or Response type packet for modification, once verify the source and destination address
